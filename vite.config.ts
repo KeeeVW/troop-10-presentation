@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import { fileURLToPath, URL } from "node:url";
 
 export default defineConfig(({ command }) => ({
-  base: command === "build" ? "/troop-10-presentation/" : "/",
+  base: command === "build" ? "/plan/" : "/",
   plugins: [react()],
   resolve: {
     alias: {

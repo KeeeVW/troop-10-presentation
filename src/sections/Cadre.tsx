@@ -107,7 +107,7 @@ function Profile({ person, index }: { person: CadrePerson; index: number }) {
         {person.weaknesses && <ListBlock title="العيوب" tone="var(--weakness)" items={person.weaknesses} />}
         {person.analysis && (
           <ListBlock
-            title="التحليل"
+            title="محتاج يتعلم"
             tone="var(--brown)"
             items={person.analysis}
             wide={analysisOnly}
