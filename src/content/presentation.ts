@@ -26,7 +26,7 @@ export const closingStatement = "";
 export const sections = [
   { id: "swot", number: "1", title: "SWOT ANALYSIS" },
   { id: "vision", number: "2", title: "VISION" },
-  { id: "plan", number: "3", title: "3-YEAR PLAN" },
+  { id: "plan", number: "3", title: "3-YEARS PLAN" },
   { id: "cadre", number: "4", title: "CADRE ANALYSIS" },
 ] as const;
 
@@ -39,7 +39,7 @@ export const swot = {
     clusters: [
       {
         id: "people",
-        label: "الناس والعلاقات",
+        label: " العلاقات",
         points: [
           {
             id: "active",
@@ -51,12 +51,12 @@ export const swot = {
           },
           {
             id: "parents",
-            text: "علاقتنا مع الاهالي كويسه و قويه و في بنا ثقة قويه بنيت من خلال مواقف كتير ومع عدم حدوث اي مشاكل او حوادث حتي لو غصب عننا فبقي عندهم ثقه فينا تسمحلنا نطلب منهم ان الولاد هتطلع معسكر طلائع، معسكر بعيد، هتحرك بمواصلات عامة، هنروح مكان زحمة",
+            text: "علاقتنا مع الاهالي كويسه و قويه و في بنا ثقة قويه بنيت من خلال مواقف كتير ومع عدم حدوث اي مشاكل او حوادث حتي لو غصب عننا فبقي عندهم ثقه فينا تسمحلنا نطلب منهم ان الولاد هتطلع",
             enables: [
               "معسكر طلائع",
               "معسكر بعيد",
-              "مواصلات عامة",
-              "مكان زحمة",
+              "هنتحرك بمواصلات عامة",
+              "هنروح مكان زحمة",
             ],
           },
         ],
@@ -90,7 +90,7 @@ export const swot = {
       },
       {
         id: "rhythm",
-        label: "الإيقاع والاستمرارية",
+        label: " الاستمرارية",
         points: [
           {
             id: "cubs",
@@ -232,7 +232,7 @@ export const visionScout = {
     },
     {
       id: "s5",
-      title: "التواصل الفعّال",
+      title: "التواصل الفعال",
       detail: [
         "عايزه يعرف يتكلم ويعبر عن أفكاره بطريقة واضحة، ويعرف يسمع ويفهم الشخص اللي قدامه، سواء كان أكبر منه أو أصغر منه. يعرف يناقش من غير ما يفرض رأيه، ويعرف يشرح المعلومة لغيره بطريقة تناسب الشخص اللي قدامه، خصوصًا لما يكون بيساعد أو يعلم ولد أصغر منه.",
       ],
@@ -298,12 +298,12 @@ export const yearPlan = {
       year: "2027",
       groups: [
         {
-          name: "fer2a",
+          name: "فرقة",
           items: [
             { label: "يوم فرقة", value: "20" },
             { label: "أيام طلائع", value: "7" },
             { label: "أيام خروجات أو events", value: "8" },
-            { label: "camp fr2a", value: "1" },
+            { label: "معسكر فرقة ", value: "1" },
             { label: "camp طلائع", value: "1" },
           ],
         },
@@ -328,17 +328,20 @@ export const yearPlan = {
       year: "2028",
       groups: [
         {
-          name: "fer2a",
+          name: "فرقة",
           items: [
             { label: "يوم فرقة", value: "21" },
             { label: "خروجات أو events", value: "7" },
             { label: "أيام طلائع", value: "8" },
-            { label: "camp fr2a", value: "1" },
+            { label: " معسكر فرقة", value: "1" },
           ],
         },
         {
           name: "HP",
-          items: [{ label: "اجتماعات", value: "9" }],
+          items: [
+            { label: "اجتماع", value: "9" },
+            { label: "معسكر", value: "1" },
+          ],
         },
         {
           name: "Cadre",
@@ -367,11 +370,11 @@ export const cadre: CadrePerson[] = [
     id: "kero",
     name: "KERO",
     strengths: [
-      "آدم في الكادر",
-      "عارف نظام",
+      "قديم في الكادر",
+      "عارف النظام",
       "يعتمد عليه لو المسؤولية على مزاجه",
       "شاطر في فنيات",
-      "Good listener",
+      " listener Good",
     ],
     technicalSkills: ["عُهدة", "رباطات", "منشآت"],
     weaknesses: [
@@ -395,7 +398,7 @@ export const cadre: CadrePerson[] = [
       "مش بيسمع",
       "بينسى",
       "Robot",
-      "مش بيبص على roadmap، بيبص على أقرب خطوة",
+      "مش بيبص على roadmap،  بيبص على أقرب خطوة بس",
       "بيحاول يثبت رأيه",
       "AI buddy",
       "مش ملتزم بالـdeadlines",
@@ -408,6 +411,14 @@ export const cadre: CadrePerson[] = [
       "مرحلة سنية",
       "discipline",
       "نفصل بين إني متضايق من فعل فرد عمله، وإني متضايق من الفرد نفسه",
+      "نظام الطلاثع",
+      "طريقة التحضير",
+      "طرق التعلم",
+      "learing Ex",
+      "storming Brain ",
+      "Leadership",
+
+
     ],
   },
   {

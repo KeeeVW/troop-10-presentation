@@ -134,12 +134,13 @@ export function SWOT({ step, setStep }: Props) {
                 <AreaHeader en="Opportunities" tone="var(--opportunity)" />
                 <div
                   style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(3, 1fr)",
-                    gap: "0.75rem",
-                    marginTop: "1rem",
-                    flex: 1,
-                    minHeight: 0,
+                    display: "flex",
+                    flexDirection: "row",
+                    flexWrap: "nowrap",
+                    alignItems: "stretch",
+                    gap: "0.9rem",
+                    marginTop: "1.25rem",
+                    width: "100%",
                   }}
                 >
                   {swot.opportunities.points.map((p, i) => (
@@ -147,12 +148,25 @@ export function SWOT({ step, setStep }: Props) {
                       key={p}
                       delay={0.1 * i}
                       glow="rgba(85,102,58,0.2)"
-                      style={{ minHeight: 0, height: "100%", padding: "0.9rem 1rem" }}
+                      style={{
+                        flex: "1 1 0",
+                        minWidth: 0,
+                        alignSelf: "stretch",
+                        height: "auto",
+                        minHeight: "14rem",
+                        padding: "1.15rem 1.2rem",
+                        display: "flex",
+                        flexDirection: "column",
+                      }}
                     >
-                      <span className="en" style={{ fontSize: "1.6rem", fontWeight: 700, color: "var(--opportunity)", opacity: 0.35 }}>
+                      <span className="en" style={{ fontSize: "1.85rem", fontWeight: 700, color: "var(--opportunity)", opacity: 0.35 }}>
                         {i + 1}
                       </span>
-                      <MixedText text={p} as="p" className="body-md" style={{ marginTop: "0.55rem", fontSize: "0.95rem" }} />
+                      <MixedText
+                        text={p}
+                        as="p"
+                        style={{ marginTop: "0.75rem", fontSize: "clamp(1rem, 1.4vw, 1.2rem)", lineHeight: 1.65, color: "var(--ink-soft)", flex: 1 }}
+                      />
                     </InteractivePanel>
                   ))}
                 </div>
@@ -173,10 +187,12 @@ export function SWOT({ step, setStep }: Props) {
                     flex: 1,
                     minHeight: 0,
                     display: "flex",
+                    flexDirection: "row",
                     alignItems: "center",
                     justifyContent: "center",
                     gap: "0.55rem",
                     flexWrap: "wrap",
+                    direction: "rtl",
                   }}
                 >
                   {swot.threats.cycle.map((node, i) => (
@@ -185,7 +201,7 @@ export function SWOT({ step, setStep }: Props) {
                       initial={{ opacity: 0, scale: 0.88 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.18 * i }}
-                      style={{ display: "flex", alignItems: "center", gap: "0.55rem", maxWidth: "16rem" }}
+                      style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "0.55rem", maxWidth: "17.5rem", direction: "rtl" }}
                     >
                       <InteractivePanel
                         glow="rgba(106,56,56,0.2)"
@@ -197,11 +213,11 @@ export function SWOT({ step, setStep }: Props) {
                       {i < swot.threats.cycle.length - 1 && (
                         <motion.span
                           className="en"
-                          animate={{ x: [0, 4, 0], opacity: [0.35, 0.7, 0.35] }}
+                          animate={{ x: [0, -4, 0], opacity: [0.35, 0.7, 0.35] }}
                           transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-                          style={{ fontSize: "1.35rem", color: "var(--threat)" }}
+                          style={{ fontSize: "1.5rem", color: "var(--threat)", flexShrink: 0 }}
                         >
-                          →
+                          ←
                         </motion.span>
                       )}
                     </motion.div>
@@ -273,9 +289,10 @@ function StrengthsView({ clusterIndex }: { clusterIndex: number }) {
           flex: 1,
           minHeight: 0,
           display: "grid",
-          gridTemplateRows: `repeat(${cluster.points.length}, minmax(0, 1fr))`,
-          gap: "0.45rem",
-          overflow: "hidden",
+          alignContent: "start",
+          gap: "0.7rem",
+          overflow: "auto",
+          paddingBottom: "0.5rem",
         }}
       >
         {cluster.points.map((point, i) => (
@@ -283,11 +300,21 @@ function StrengthsView({ clusterIndex }: { clusterIndex: number }) {
             key={point.id}
             delay={0.06 * i}
             glow="rgba(42,82,64,0.18)"
-            style={{ padding: "0.65rem 0.85rem", minHeight: 0, overflow: "hidden", display: "flex", flexDirection: "column" }}
+            style={{
+              padding: "0.85rem 1.05rem",
+              height: "fit-content",
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+            }}
           >
-            <MixedText text={point.text} as="p" style={{ fontSize: "0.88rem", lineHeight: 1.45, color: "var(--ink-soft)", margin: 0 }} />
+            <MixedText
+              text={point.text}
+              as="p"
+              style={{ fontSize: "clamp(1.05rem, 1.55vw, 1.28rem)", lineHeight: 1.65, color: "var(--ink-soft)", margin: 0 }}
+            />
             {"results" in point && point.results && (
-              <div style={{ display: "flex", gap: "0.35rem", flexWrap: "wrap", marginTop: "0.45rem" }}>
+              <div style={{ display: "flex", gap: "0.45rem", flexWrap: "wrap", marginTop: "0.65rem" }}>
                 {point.results.map((r) => (
                   <MixedText
                     key={r}
@@ -295,27 +322,27 @@ function StrengthsView({ clusterIndex }: { clusterIndex: number }) {
                     as="span"
                     style={{
                       display: "inline-block",
-                      padding: "0.28rem 0.55rem",
+                      padding: "0.35rem 0.7rem",
                       background: "rgba(42,82,64,0.1)",
                       borderRight: "3px solid var(--green-mid)",
                       borderRadius: "999px",
-                      fontSize: "0.78rem",
+                      fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)",
                     }}
                   />
                 ))}
               </div>
             )}
             {"enables" in point && point.enables && (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.35rem", marginTop: "0.45rem" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.45rem", marginTop: "0.65rem" }}>
                 {point.enables.map((e) => (
                   <span
                     key={e}
                     className="ar"
                     style={{
                       textAlign: "center",
-                      padding: "0.4rem 0.25rem",
+                      padding: "0.5rem 0.3rem",
                       background: "rgba(106,74,52,0.08)",
-                      fontSize: "0.75rem",
+                      fontSize: "clamp(0.85rem, 1.15vw, 1rem)",
                       borderRadius: "0.7rem",
                     }}
                   >

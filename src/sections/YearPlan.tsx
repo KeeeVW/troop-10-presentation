@@ -68,52 +68,94 @@ function Overview() {
 }
 
 function YearView({ year }: { year: (typeof yearPlan.years)[number] }) {
+  const [primary, ...rest] = year.groups;
+
   return (
-    <motion.div {...zoomIn} transition={cinematic} style={{ height: "100%", display: "flex", flexDirection: "column", minHeight: 0 }}>
-      <h3 className="en" style={{ marginBottom: "0.75rem", fontFamily: "var(--font-en)", fontSize: "clamp(1.5rem, 2.8vw, 2rem)", fontWeight: 700, color: "var(--green-deep)" }}>
+    <motion.div {...zoomIn} transition={cinematic} style={{ height: "100%", display: "flex", flexDirection: "column", minHeight: 0, overflow: "hidden" }}>
+      <h3 className="en" style={{ marginBottom: "0.65rem", fontFamily: "var(--font-en)", fontSize: "clamp(1.45rem, 2.6vw, 1.9rem)", fontWeight: 700, color: "var(--green-deep)", flexShrink: 0 }}>
         {year.year}
       </h3>
-      <div
-        style={{
-          flex: 1,
-          minHeight: 0,
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gridTemplateRows: "repeat(2, minmax(0, 1fr))",
-          gap: "0.65rem",
-        }}
-      >
-        {year.groups.map((g, i) => (
-          <InteractivePanel
-            key={g.name}
-            delay={0.06 * i}
-            style={{ padding: "0.7rem 0.85rem", display: "flex", flexDirection: "column", minHeight: 0, overflow: "hidden" }}
+
+      <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", gap: "0.65rem", overflow: "hidden" }}>
+        <InteractivePanel
+          key={primary.name}
+          delay={0}
+          style={{ padding: "0.75rem 1rem", flexShrink: 0 }}
+        >
+          <p className="en" style={{ fontWeight: 700, letterSpacing: "0.1em", color: "var(--brown)", marginBottom: "0.5rem", fontSize: "0.82rem" }}>
+            {primary.name}
+          </p>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: `repeat(${Math.min(primary.items.length, 5)}, minmax(0, 1fr))`,
+              gap: "0.55rem",
+            }}
           >
-            <p className="en" style={{ fontWeight: 700, letterSpacing: "0.1em", color: "var(--brown)", marginBottom: "0.45rem", fontSize: "0.78rem" }}>
-              {g.name}
-            </p>
-            <div style={{ display: "grid", gap: "0.28rem", overflow: "hidden" }}>
-              {g.items.map((item) => (
-                <div
-                  key={`${item.label}-${item.value}`}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "baseline",
-                    gap: "0.6rem",
-                    borderBottom: "1px solid rgba(20,46,38,0.08)",
-                    paddingBottom: "0.22rem",
-                  }}
-                >
-                  <MixedText text={item.label} as="span" style={{ fontSize: "0.82rem", lineHeight: 1.35, color: "var(--ink-soft)" }} />
-                  <span className="en" style={{ fontSize: "1.15rem", fontWeight: 700, color: "var(--green-deep)", flexShrink: 0 }}>
-                    {item.value}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </InteractivePanel>
-        ))}
+            {primary.items.map((item) => (
+              <div
+                key={`${item.label}-${item.value}`}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.2rem",
+                  padding: "0.45rem 0.5rem",
+                  background: "rgba(42,82,64,0.06)",
+                  borderRadius: "0.65rem",
+                  minWidth: 0,
+                }}
+              >
+                <span className="en" style={{ fontSize: "clamp(1.25rem, 2.2vw, 1.55rem)", fontWeight: 700, color: "var(--green-deep)", lineHeight: 1 }}>
+                  {item.value}
+                </span>
+                <MixedText text={item.label} as="span" style={{ fontSize: "0.8rem", lineHeight: 1.35, color: "var(--ink-soft)" }} />
+              </div>
+            ))}
+          </div>
+        </InteractivePanel>
+
+        <div
+          style={{
+            flex: 1,
+            minHeight: 0,
+            display: "grid",
+            gridTemplateColumns: `repeat(${rest.length}, minmax(0, 1fr))`,
+            gap: "0.65rem",
+            alignContent: "stretch",
+          }}
+        >
+          {rest.map((g, i) => (
+            <InteractivePanel
+              key={g.name}
+              delay={0.06 * (i + 1)}
+              style={{ padding: "0.75rem 0.9rem", display: "flex", flexDirection: "column", minHeight: 0 }}
+            >
+              <p className="en" style={{ fontWeight: 700, letterSpacing: "0.1em", color: "var(--brown)", marginBottom: "0.45rem", fontSize: "0.82rem" }}>
+                {g.name}
+              </p>
+              <div style={{ display: "grid", gap: "0.35rem" }}>
+                {g.items.map((item) => (
+                  <div
+                    key={`${item.label}-${item.value}`}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "baseline",
+                      gap: "0.6rem",
+                      borderBottom: "1px solid rgba(20,46,38,0.08)",
+                      paddingBottom: "0.28rem",
+                    }}
+                  >
+                    <MixedText text={item.label} as="span" style={{ fontSize: "0.88rem", lineHeight: 1.4, color: "var(--ink-soft)" }} />
+                    <span className="en" style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--green-deep)", flexShrink: 0 }}>
+                      {item.value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </InteractivePanel>
+          ))}
+        </div>
       </div>
     </motion.div>
   );
