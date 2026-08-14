@@ -4,6 +4,9 @@ import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
   base: '/troop-10-presentation/',
+  build: {
+    outDir: 'docs',
+  },
   plugins: [react()],
   resolve: {
     alias: {
