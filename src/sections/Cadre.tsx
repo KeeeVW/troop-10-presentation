@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { InteractivePanel } from "@/components/InteractivePanel";
 import { MixedText } from "@/components/MixedText";
 import { cadre, type CadrePerson } from "@/content/presentation";
-import { cinematic, zoomIn, zoomOut } from "@/motion/presets";
+import { cinematic, zoomIn, zoomOut, cinematicFast } from "@/motion/presets";
 
 type Props = {
   step: number;
@@ -15,11 +15,17 @@ export function Cadre({ step }: Props) {
   return (
     <motion.section className="stage" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <div style={{ maxWidth: "74rem", width: "100%", margin: "0 auto", flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
-        <div style={{ marginBottom: "0.75rem", flexShrink: 0 }}>
+        <div style={{ marginBottom: "0.9rem", flexShrink: 0 }}>
           <p className="eyebrow">4 — CADRE ANALYSIS</p>
-          <h2 className="en" style={{ fontFamily: "var(--font-en)", fontSize: "clamp(1.7rem, 3.2vw, 2.4rem)", fontWeight: 700, color: "var(--green-deep)", margin: 0 }}>
+          <motion.h2
+            className="en"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{ fontFamily: "var(--font-en)", fontSize: "clamp(1.85rem, 3.4vw, 2.6rem)", fontWeight: 700, color: "var(--green-deep)", margin: 0 }}
+          >
             CADRE ANALYSIS
-          </h2>
+          </motion.h2>
         </div>
 
         <div style={{ flex: 1, minHeight: 0, overflow: "hidden" }}>
@@ -42,28 +48,28 @@ function TeamOverview() {
         height: "100%",
         display: "grid",
         gridTemplateColumns: "repeat(4, 1fr)",
-        gap: "1rem",
+        gap: "1.2rem",
         alignContent: "center",
       }}
     >
       {cadre.map((p, i) => (
         <InteractivePanel
           key={p.id}
-          delay={0.1 * i}
-          glow={["rgba(42,82,64,0.22)", "rgba(106,74,52,0.2)", "rgba(85,102,58,0.2)", "rgba(63,44,32,0.18)"][i]}
+          delay={0.12 * i}
+          glow={["rgba(138,154,91,0.18)", "rgba(125,97,71,0.16)", "rgba(122,138,77,0.16)", "rgba(125,97,71,0.15)"][i]}
           style={{
-            minHeight: "11rem",
+            minHeight: "12rem",
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-end",
-            padding: "1.35rem",
-            borderTop: `3px solid ${tone(i)}`,
+            padding: "1.5rem 1.35rem",
+            borderTop: `4px solid ${tone(i)}`,
           }}
         >
-          <span className="en" style={{ fontSize: "clamp(1.55rem, 2.4vw, 2.15rem)", fontWeight: 800, color: "var(--green-deep)" }}>
+          <span className="en" style={{ fontSize: "clamp(1.75rem, 2.6vw, 2.35rem)", fontWeight: 800, color: "var(--green-deep)" }}>
             {p.name}
           </span>
-          <span className="ar muted" style={{ marginTop: "0.55rem", fontSize: "0.85rem" }}>
+          <span className="ar muted" style={{ marginTop: "0.7rem", fontSize: "0.92rem" }}>
             {summaryLabel(p)}
           </span>
         </InteractivePanel>
@@ -82,11 +88,17 @@ function Profile({ person, index }: { person: CadrePerson; index: number }) {
       transition={cinematic}
       style={{ height: "100%", display: "flex", flexDirection: "column", minHeight: 0, overflow: "hidden" }}
     >
-      <div style={{ display: "flex", alignItems: "baseline", gap: "1rem", marginBottom: "0.85rem", flexShrink: 0 }}>
-        <h3 className="en" style={{ fontFamily: "var(--font-en)", fontSize: "clamp(1.7rem, 3vw, 2.4rem)", fontWeight: 700, color: "var(--green-deep)", margin: 0 }}>
+      <div style={{ display: "flex", alignItems: "baseline", gap: "1rem", marginBottom: "1rem", flexShrink: 0 }}>
+        <motion.h3
+          className="en"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          style={{ fontFamily: "var(--font-en)", fontSize: "clamp(1.85rem, 3.2vw, 2.5rem)", fontWeight: 700, color: "var(--green-deep)", margin: 0 }}
+        >
           {person.name}
-        </h3>
-        <span className="en muted" style={{ letterSpacing: "0.12em", fontSize: "0.75rem" }}>
+        </motion.h3>
+        <span className="en muted" style={{ letterSpacing: "0.12em", fontSize: "0.8rem" }}>
           {index + 1} / 4
         </span>
       </div>
@@ -97,23 +109,51 @@ function Profile({ person, index }: { person: CadrePerson; index: number }) {
           minHeight: 0,
           display: "grid",
           gridTemplateColumns: analysisOnly ? "1fr" : "1fr 1fr",
-          gap: "0.75rem",
+          gap: "0.95rem",
           overflow: "hidden",
         }}
       >
-        {person.strengths && (
-          <ListBlock title="المميزات" tone="var(--strength)" items={person.strengths} extra={person.technicalSkills} />
-        )}
-        {person.weaknesses && <ListBlock title="العيوب" tone="var(--weakness)" items={person.weaknesses} />}
-        {person.analysis && (
-          <ListBlock
-            title="محتاج يتعلم"
-            tone="var(--brown)"
-            items={person.analysis}
-            wide={analysisOnly}
-            dense={dense || analysisOnly}
-          />
-        )}
+        <AnimatePresence mode="wait">
+          {person.strengths && (
+            <motion.div
+              key="strengths"
+              initial={{ opacity: 0, x: 40, scale: 0.95 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: -40, scale: 0.95 }}
+              transition={cinematicFast}
+            >
+              <ListBlock title="نقاط قوة" tone="var(--strength)" items={person.strengths} extra={person.technicalSkills} />
+            </motion.div>
+          )}
+          {person.weaknesses && (
+            <motion.div
+              key="weaknesses"
+              initial={{ opacity: 0, x: -40, scale: 0.95 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: 40, scale: 0.95 }}
+              transition={{ ...cinematicFast, delay: person.strengths ? 0.2 : 0 }}
+            >
+              <ListBlock title="نقاط ضعف" tone="var(--weakness)" items={person.weaknesses} />
+            </motion.div>
+          )}
+          {person.analysis && (
+            <motion.div
+              key="analysis"
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={cinematicFast}
+            >
+              <ListBlock
+                title="محتاج يتعلم"
+                tone="var(--brown)"
+                items={person.analysis}
+                wide={analysisOnly}
+                dense={dense || analysisOnly}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.div>
   );
@@ -214,8 +254,8 @@ function tone(i: number) {
 
 function summaryLabel(p: CadrePerson) {
   const parts: string[] = [];
-  if (p.strengths) parts.push("مميزات");
-  if (p.weaknesses) parts.push("عيوب");
-  if (p.analysis) parts.push("تحليل");
+  if (p.strengths) parts.push("نقاط قوة");
+  if (p.weaknesses) parts.push("نقاط ضعف");
+  if (p.analysis) parts.push("محتاج يتعلم");
   return parts.join(" · ");
 }

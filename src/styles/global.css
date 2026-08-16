@@ -1,21 +1,22 @@
 :root {
-  --green-deep: #142e26;
-  --green-mid: #2a5240;
-  --green-soft: #3d6b52;
-  --green-mist: #9fbcab;
+  --green-deep: #5d6d40;
+  --green-mid: #8A9A5B;
+  --green-soft: #a8b878;
+  --green-mist: #c4d4a0;
   --beige: #d6c6a8;
-  --brown: #6a4a34;
-  --brown-deep: #3f2c20;
+  --brown: #7d6147;
+  --brown-deep: #4a3a2e;
+  --brown-light: #9a8675;
   --cream: #f4efe6;
   --cream-soft: #e8dfcf;
   --off-white: #fbf8f2;
   --ink: #171410;
   --ink-soft: #3a332d;
-  --muted: #7a6e62;
-  --strength: #2a5240;
-  --weakness: #7f3a30;
-  --opportunity: #55663a;
-  --threat: #6a3838;
+  --muted: #8a7e72;
+  --strength: #8A9A5B;
+  --weakness: #a94d3b;
+  --opportunity: #7a8a4d;
+  --threat: #7d5252;
 
   --font-ar: "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
   --font-en: "Outfit", "IBM Plex Sans Arabic", sans-serif;
@@ -50,6 +51,15 @@ body {
   user-select: none;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.12), transparent 38%, rgba(125, 97, 71, 0.08));
+  z-index: 0;
+}
+
 button {
   font: inherit;
   color: inherit;
@@ -79,10 +89,20 @@ button {
   height: 100dvh;
   overflow: hidden;
   background:
-    radial-gradient(ellipse 90% 70% at 100% -10%, rgba(61, 107, 82, 0.28), transparent 55%),
-    radial-gradient(ellipse 70% 55% at -10% 110%, rgba(106, 74, 52, 0.22), transparent 50%),
-    radial-gradient(ellipse 40% 30% at 50% 40%, rgba(255, 255, 255, 0.18), transparent 70%),
-    linear-gradient(160deg, var(--cream) 0%, var(--cream-soft) 48%, #ddd1bb 100%);
+    radial-gradient(ellipse 95% 75% at 100% -15%, rgba(138, 154, 91, 0.15), transparent 60%),
+    radial-gradient(ellipse 75% 60% at -12% 115%, rgba(125, 97, 71, 0.18), transparent 55%),
+    radial-gradient(ellipse 45% 35% at 50% 40%, rgba(255, 255, 255, 0.15), transparent 70%),
+    linear-gradient(160deg, var(--cream) 0%, var(--cream-soft) 48%, #e5d7bf 100%);
+  isolation: isolate;
+}
+
+.app-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent 25%, rgba(93,109,64,0.04) 72%, rgba(74,58,46,0.05));
+  z-index: 0;
 }
 
 .stage {
@@ -108,7 +128,7 @@ button {
 .progress-rail > span {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--green-mid), var(--brown));
+  background: linear-gradient(90deg, var(--green-mid), var(--brown-light));
   transform-origin: right center;
   transition: width 0.45s var(--ease-out);
 }
@@ -149,11 +169,12 @@ button {
   display: flex;
   align-items: baseline;
   gap: 0.55rem;
-  padding: 0.3rem 0.8rem;
-  border: 1px solid rgba(20, 46, 38, 0.12);
-  background: rgba(251, 248, 242, 0.55);
-  backdrop-filter: blur(10px);
+  padding: 0.35rem 0.95rem;
+  border: 1px solid rgba(125, 97, 71, 0.2);
+  background: rgba(251, 248, 242, 0.68);
+  backdrop-filter: blur(12px);
   border-radius: 999px;
+  box-shadow: 0 10px 26px rgba(74, 58, 46, 0.05);
 }
 
 .section-chip .num {
@@ -192,7 +213,7 @@ button {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(20, 46, 38, 0.28);
-  transition: color 0.25s;
+  transition: color 0.25s var(--ease-out), transform 0.25s var(--ease-out), opacity 0.25s;
   padding: 0.12rem 0.2rem;
   direction: ltr;
 }
@@ -200,6 +221,7 @@ button {
 .toc-mini button:hover,
 .toc-mini button.active {
   color: var(--green-deep);
+  transform: translateX(-2px);
 }
 
 .display-xl {
@@ -259,17 +281,22 @@ button {
 
 .panel {
   position: relative;
-  background: rgba(251, 248, 242, 0.78);
-  border: 1px solid rgba(20, 46, 38, 0.1);
-  border-radius: 1.15rem;
-  padding: 1.25rem 1.45rem;
+  background: rgba(251, 248, 242, 0.82);
+  border: 1px solid rgba(125, 97, 71, 0.15);
+  border-radius: 1.6rem;
+  padding: 1.45rem 1.65rem;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(20, 46, 38, 0.04);
+  box-shadow:
+    0 12px 40px rgba(93, 109, 64, 0.08),
+    0 2px 8px rgba(125, 97, 71, 0.06),
+    inset 0 1px 1px rgba(255, 255, 255, 0.4);
   transition:
     transform 0.4s var(--ease-out),
     background 0.35s,
     border-color 0.35s,
-    box-shadow 0.4s var(--ease-out);
+    box-shadow 0.4s var(--ease-out),
+    filter 0.3s ease;
+  will-change: transform;
 }
 
 .panel::before {
@@ -297,11 +324,13 @@ button {
 }
 
 .panel-interactive:hover {
-  background: rgba(251, 248, 242, 0.95);
-  border-color: rgba(20, 46, 38, 0.22);
+  background: rgba(251, 248, 242, 0.98);
+  border-color: rgba(138, 154, 91, 0.35);
   box-shadow:
-    0 12px 28px rgba(20, 46, 38, 0.08),
-    0 0 0 1px rgba(255, 255, 255, 0.35) inset;
+    0 18px 48px rgba(93, 109, 64, 0.12),
+    0 4px 12px rgba(125, 97, 71, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset;
+  filter: saturate(1.04);
 }
 
 .panel-interactive:hover::before {
@@ -321,9 +350,15 @@ button {
   text-transform: uppercase;
   padding: 0.32rem 0.7rem;
   border-radius: 999px;
-  background: rgba(20, 46, 38, 0.08);
+  background: rgba(138, 154, 91, 0.12);
   color: var(--green-deep);
-  transition: transform 0.25s var(--ease-out), background 0.25s;
+  transition: transform 0.25s var(--ease-out), background 0.25s, box-shadow 0.25s;
+  box-shadow: inset 0 0 0 1px rgba(93, 109, 64, 0.06);
+}
+
+.tag:hover {
+  transform: translateY(-1px);
+  background: rgba(138, 154, 91, 0.16);
 }
 
 .grain {
@@ -359,8 +394,8 @@ button {
   pointer-events: none;
   z-index: 0;
   background:
-    linear-gradient(180deg, rgba(20, 46, 38, 0.04), transparent 18%),
-    linear-gradient(0deg, rgba(63, 44, 32, 0.05), transparent 16%);
+    linear-gradient(180deg, rgba(93, 109, 64, 0.05), transparent 18%),
+    linear-gradient(0deg, rgba(74, 58, 46, 0.06), transparent 16%);
 }
 
 .scroll-area {

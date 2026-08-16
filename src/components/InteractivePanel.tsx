@@ -33,17 +33,16 @@ export function InteractivePanel({
     transition: { type: "spring" as const, stiffness: 320, damping: 24, delay },
   };
 
+  const interactiveProps = onClick
+    ? {
+        type: "button" as const,
+        onClick,
+        "data-no-advance": noAdvance ? true : undefined,
+      }
+    : {};
+
   if (onClick) {
-    return (
-      <motion.button
-        type="button"
-        data-no-advance={noAdvance ? true : undefined}
-        onClick={onClick}
-        {...common}
-      >
-        {children}
-      </motion.button>
-    );
+    return <motion.button {...common} {...interactiveProps}>{children}</motion.button>;
   }
 
   return <motion.div {...common}>{children}</motion.div>;

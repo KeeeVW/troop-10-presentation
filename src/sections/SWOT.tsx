@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { InteractivePanel } from "@/components/InteractivePanel";
 import { MixedText } from "@/components/MixedText";
 import { swot } from "@/content/presentation";
-import { cinematic, zoomIn, zoomOut } from "@/motion/presets";
+import { cinematic, zoomIn, zoomOut, cinematicFast } from "@/motion/presets";
 
 type Area = "overview" | "strengths" | "weaknesses" | "opportunities" | "threats";
 
@@ -18,10 +18,10 @@ const AREAS: {
   glow: string;
   jumpTo: number;
 }[] = [
-  { id: "strengths", en: "Strengths", tone: "var(--strength)", glow: "rgba(42,82,64,0.28)", jumpTo: 1 },
-  { id: "weaknesses", en: "Weaknesses", tone: "var(--weakness)", glow: "rgba(127,58,48,0.22)", jumpTo: 4 },
-  { id: "opportunities", en: "Opportunities", tone: "var(--opportunity)", glow: "rgba(85,102,58,0.26)", jumpTo: 5 },
-  { id: "threats", en: "Threats", tone: "var(--threat)", glow: "rgba(106,56,56,0.24)", jumpTo: 6 },
+  { id: "strengths", en: "Strengths", tone: "var(--strength)", glow: "rgba(138,154,91,0.22)", jumpTo: 1 },
+  { id: "weaknesses", en: "Weaknesses", tone: "var(--weakness)", glow: "rgba(169,77,59,0.22)", jumpTo: 4 },
+  { id: "opportunities", en: "Opportunities", tone: "var(--opportunity)", glow: "rgba(122,138,77,0.2)", jumpTo: 5 },
+  { id: "threats", en: "Threats", tone: "var(--threat)", glow: "rgba(125,82,82,0.18)", jumpTo: 6 },
 ];
 
 export const SWOT_STEPS = 7;
@@ -41,11 +41,17 @@ export function SWOT({ step, setStep }: Props) {
   return (
     <motion.section className="stage" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <div style={{ maxWidth: "74rem", width: "100%", margin: "0 auto", flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
-        <div style={{ marginBottom: "0.75rem", flexShrink: 0 }}>
+        <div style={{ marginBottom: "0.9rem", flexShrink: 0 }}>
           <p className="eyebrow">1 — SWOT ANALYSIS</p>
-          <h2 className="en" style={{ fontFamily: "var(--font-en)", fontSize: "clamp(1.7rem, 3.2vw, 2.4rem)", fontWeight: 700, color: "var(--green-deep)", margin: 0 }}>
+          <motion.h2
+            className="en"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{ fontFamily: "var(--font-en)", fontSize: "clamp(1.8rem, 3.4vw, 2.5rem)", fontWeight: 700, color: "var(--green-deep)", margin: 0 }}
+          >
             SWOT ANALYSIS
-          </h2>
+          </motion.h2>
         </div>
 
         <div style={{ flex: 1, position: "relative", minHeight: 0 }}>
@@ -61,7 +67,7 @@ export function SWOT({ step, setStep }: Props) {
                   display: "grid",
                   gridTemplateColumns: "1fr 1fr",
                   gridTemplateRows: "1fr 1fr",
-                  gap: "0.9rem",
+                  gap: "1.1rem",
                   minHeight: 0,
                 }}
               >
@@ -70,7 +76,7 @@ export function SWOT({ step, setStep }: Props) {
                     key={a.id}
                     noAdvance
                     onClick={() => setStep(a.jumpTo)}
-                    delay={0.08 * i}
+                    delay={0.1 * i}
                     glow={a.glow}
                     style={{
                       display: "flex",
@@ -78,18 +84,18 @@ export function SWOT({ step, setStep }: Props) {
                       justifyContent: "flex-end",
                       minHeight: 0,
                       height: "100%",
-                      borderTop: `3px solid ${a.tone}`,
+                      borderTop: `4px solid ${a.tone}`,
                       textAlign: "right",
-                      padding: "1rem 1.2rem",
+                      padding: "1.35rem 1.45rem",
                     }}
                   >
                     <motion.span
                       className="en"
-                      animate={{ opacity: [0.85, 1, 0.85] }}
-                      transition={{ duration: 3.2 + i * 0.25, repeat: Infinity, ease: "easeInOut" }}
+                      animate={{ opacity: [0.8, 1, 0.8] }}
+                      transition={{ duration: 3.5 + i * 0.3, repeat: Infinity, ease: "easeInOut" }}
                       style={{
-                        fontSize: "clamp(1.8rem, 3.2vw, 2.6rem)",
-                        letterSpacing: "0.04em",
+                        fontSize: "clamp(1.95rem, 3.4vw, 2.8rem)",
+                        letterSpacing: "0.05em",
                         color: a.tone,
                         fontWeight: 700,
                         lineHeight: 1.15,
@@ -114,10 +120,37 @@ export function SWOT({ step, setStep }: Props) {
                 style={{ height: "100%", minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}
               >
                 <AreaHeader en="Weaknesses" tone="var(--weakness)" />
-                <div style={{ display: "grid", gap: "0.75rem", marginTop: "1rem", flex: 1, minHeight: 0, alignContent: "start" }}>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr",
+                    gap: "0.8rem",
+                    marginTop: "1.2rem",
+                    flex: 1,
+                    minHeight: 0,
+                    alignContent: "start",
+                    alignItems: "stretch",
+                    overflow: "auto",
+                    padding: "0.2rem 0.1rem 0.5rem",
+                  }}
+                >
                   {swot.weaknesses.points.map((p, i) => (
-                    <InteractivePanel key={p} delay={0.1 * i} glow="rgba(127,58,48,0.16)" style={{ padding: "0.9rem 1.1rem" }}>
-                      <MixedText text={p} as="p" className="body-md" />
+                    <InteractivePanel
+                      key={p}
+                      delay={0.12 * i}
+                      glow="rgba(169,77,59,0.2)"
+                      style={{
+                        width: "100%",
+                        padding: "1rem 1.2rem",
+                        minHeight: "fit-content",
+                        display: "block",
+                        background: "rgba(169,77,59,0.04)",
+                        borderLeft: "4px solid var(--weakness)",
+                        borderTop: "0",
+                        boxShadow: "inset 0 0 0 1px rgba(169,77,59,0.12)",
+                      }}
+                    >
+                      <MixedText text={p} as="p" className="body-md" style={{ fontSize: "clamp(1.05rem, 1.5vw, 1.25rem)", margin: 0, color: "var(--ink-soft)" }} />
                     </InteractivePanel>
                   ))}
                 </div>
@@ -138,34 +171,35 @@ export function SWOT({ step, setStep }: Props) {
                     flexDirection: "row",
                     flexWrap: "nowrap",
                     alignItems: "stretch",
-                    gap: "0.9rem",
-                    marginTop: "1.25rem",
+                    gap: "1rem",
+                    marginTop: "1.35rem",
                     width: "100%",
                   }}
                 >
                   {swot.opportunities.points.map((p, i) => (
                     <InteractivePanel
                       key={p}
-                      delay={0.1 * i}
-                      glow="rgba(85,102,58,0.2)"
+                      delay={0.12 * i}
+                      glow="rgba(122,138,77,0.16)"
                       style={{
                         flex: "1 1 0",
                         minWidth: 0,
                         alignSelf: "stretch",
                         height: "auto",
-                        minHeight: "14rem",
-                        padding: "1.15rem 1.2rem",
+                        minHeight: "15rem",
+                        padding: "1.35rem 1.35rem",
                         display: "flex",
                         flexDirection: "column",
+                        borderTop: "4px solid var(--opportunity)",
                       }}
                     >
-                      <span className="en" style={{ fontSize: "1.85rem", fontWeight: 700, color: "var(--opportunity)", opacity: 0.35 }}>
+                      <span className="en" style={{ fontSize: "2.2rem", fontWeight: 700, color: "var(--opportunity)", opacity: 0.3, lineHeight: 1 }}>
                         {i + 1}
                       </span>
                       <MixedText
                         text={p}
                         as="p"
-                        style={{ marginTop: "0.75rem", fontSize: "clamp(1rem, 1.4vw, 1.2rem)", lineHeight: 1.65, color: "var(--ink-soft)", flex: 1 }}
+                        style={{ marginTop: "0.9rem", fontSize: "clamp(1.08rem, 1.5vw, 1.3rem)", lineHeight: 1.7, color: "var(--ink-soft)", flex: 1 }}
                       />
                     </InteractivePanel>
                   ))}
@@ -183,43 +217,34 @@ export function SWOT({ step, setStep }: Props) {
                 <AreaHeader en="Threats" tone="var(--threat)" />
                 <div
                   style={{
-                    marginTop: "1.25rem",
+                    marginTop: "1.35rem",
                     flex: 1,
                     minHeight: 0,
                     display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "0.55rem",
-                    flexWrap: "wrap",
-                    direction: "rtl",
+                    flexDirection: "column",
+                    gap: "0.75rem",
+                    overflow: "auto",
                   }}
                 >
                   {swot.threats.cycle.map((node, i) => (
                     <motion.div
                       key={node}
-                      initial={{ opacity: 0, scale: 0.88 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.18 * i }}
-                      style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: "0.55rem", maxWidth: "17.5rem", direction: "rtl" }}
+                      initial={{ opacity: 0, x: 20, scale: 0.92 }}
+                      animate={{ opacity: 1, x: 0, scale: 1 }}
+                      transition={{ delay: cinematicFast.duration * 0.3 + i * 0.15, ...cinematicFast }}
+                      style={{ display: "flex", direction: "rtl" }}
                     >
                       <InteractivePanel
-                        glow="rgba(106,56,56,0.2)"
-                        delay={0.12 * i}
-                        style={{ borderColor: "rgba(106,56,56,0.28)", padding: "0.85rem 1rem" }}
+                        glow="rgba(125,82,82,0.14)"
+                        style={{
+                          flex: 1,
+                          padding: "1rem 1.2rem",
+                          borderLeft: "4px solid var(--threat)",
+                          height: "fit-content",
+                        }}
                       >
-                        <MixedText text={node} as="p" className="body-md" style={{ fontSize: "0.95rem" }} />
+                        <MixedText text={node} as="p" className="body-md" style={{ fontSize: "clamp(1.05rem, 1.5vw, 1.2rem)" }} />
                       </InteractivePanel>
-                      {i < swot.threats.cycle.length - 1 && (
-                        <motion.span
-                          className="en"
-                          animate={{ x: [0, -4, 0], opacity: [0.35, 0.7, 0.35] }}
-                          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-                          style={{ fontSize: "1.5rem", color: "var(--threat)", flexShrink: 0 }}
-                        >
-                          ←
-                        </motion.span>
-                      )}
                     </motion.div>
                   ))}
                 </div>
@@ -235,44 +260,58 @@ export function SWOT({ step, setStep }: Props) {
 function AreaHeader({ en, tone }: { en: string; tone: string }) {
   return (
     <div style={{ flexShrink: 0 }}>
-      <h3
+      <motion.h3
         className="en"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
         style={{
           margin: 0,
           color: tone,
           fontFamily: "var(--font-en)",
-          fontSize: "clamp(1.45rem, 2.6vw, 2rem)",
-          letterSpacing: "0.04em",
+          fontSize: "clamp(1.55rem, 2.8vw, 2.15rem)",
+          letterSpacing: "0.05em",
           fontWeight: 700,
         }}
       >
         {en}
-      </h3>
+      </motion.h3>
     </div>
   );
 }
 
 function StrengthsView({ clusterIndex }: { clusterIndex: number }) {
   const cluster = swot.strengths.clusters[clusterIndex];
+
   return (
     <motion.div
       {...zoomIn}
       transition={cinematic}
-      style={{ height: "100%", minHeight: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}
+      style={{
+        height: "100%",
+        minHeight: 0,
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+        maxHeight: "100%",
+      }}
     >
       <AreaHeader en="Strengths" tone="var(--strength)" />
-      <div style={{ display: "flex", gap: "0.4rem", marginTop: "0.65rem", marginBottom: "0.65rem", flexWrap: "wrap", flexShrink: 0 }}>
+
+      <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.75rem", marginBottom: "0.85rem", flexWrap: "wrap", flexShrink: 0 }}>
         {swot.strengths.clusters.map((c, i) => (
           <motion.span
             key={c.id}
             className="tag ar"
             animate={{
               opacity: i === clusterIndex ? 1 : 0.35,
-              scale: i === clusterIndex ? 1.04 : 1,
+              scale: i === clusterIndex ? 1.05 : 1,
             }}
+            transition={{ duration: 0.3 }}
             style={{
-              background: i === clusterIndex ? "rgba(42,82,64,0.12)" : "transparent",
-              fontSize: "0.62rem",
+              background: i === clusterIndex ? "rgba(138,154,91,0.15)" : "transparent",
+              fontSize: "0.65rem",
+              cursor: "pointer",
             }}
           >
             {c.label}
@@ -280,7 +319,7 @@ function StrengthsView({ clusterIndex }: { clusterIndex: number }) {
         ))}
       </div>
 
-      <h4 className="ar" style={{ marginBottom: "0.55rem", color: "var(--green-deep)", fontSize: "clamp(1.1rem, 2vw, 1.45rem)", fontWeight: 700, flexShrink: 0 }}>
+      <h4 className="ar" style={{ marginBottom: "0.7rem", color: "var(--green-deep)", fontSize: "clamp(1.2rem, 2.2vw, 1.55rem)", fontWeight: 700, flexShrink: 0 }}>
         {cluster.label}
       </h4>
 
@@ -289,61 +328,78 @@ function StrengthsView({ clusterIndex }: { clusterIndex: number }) {
           flex: 1,
           minHeight: 0,
           display: "grid",
+          gridTemplateRows: "repeat(auto-fit, minmax(0, min-content))",
           alignContent: "start",
           gap: "0.7rem",
-          overflow: "auto",
-          paddingBottom: "0.5rem",
+          overflow: "hidden",
         }}
       >
         {cluster.points.map((point, i) => (
           <InteractivePanel
             key={point.id}
-            delay={0.06 * i}
-            glow="rgba(42,82,64,0.18)"
+            delay={0.08 * i}
+            glow="rgba(138,154,91,0.14)"
             style={{
-              padding: "0.85rem 1.05rem",
-              height: "fit-content",
+              padding: "0.85rem 1rem",
               width: "100%",
+              minHeight: 0,
               display: "flex",
               flexDirection: "column",
+              justifyContent: "center",
+              borderTop: "4px solid var(--strength)",
+              overflow: "hidden",
             }}
           >
             <MixedText
               text={point.text}
               as="p"
-              style={{ fontSize: "clamp(1.05rem, 1.55vw, 1.28rem)", lineHeight: 1.65, color: "var(--ink-soft)", margin: 0 }}
+              style={{
+                margin: 0,
+                fontSize: "clamp(0.96rem, 1.25vw, 1.14rem)",
+                lineHeight: 1.45,
+                color: "var(--ink-soft)",
+                overflowWrap: "anywhere",
+                wordBreak: "break-word",
+              }}
             />
+
             {"results" in point && point.results && (
-              <div style={{ display: "flex", gap: "0.45rem", flexWrap: "wrap", marginTop: "0.65rem" }}>
+              <div style={{ display: "flex", gap: "0.45rem", flexWrap: "wrap", marginTop: "0.7rem" }}>
                 {point.results.map((r) => (
                   <MixedText
                     key={r}
                     text={r}
                     as="span"
                     style={{
-                      display: "inline-block",
-                      padding: "0.35rem 0.7rem",
-                      background: "rgba(42,82,64,0.1)",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      padding: "0.35rem 0.75rem",
+                      background: "rgba(138,154,91,0.1)",
                       borderRight: "3px solid var(--green-mid)",
                       borderRadius: "999px",
-                      fontSize: "clamp(0.9rem, 1.2vw, 1.05rem)",
+                      fontSize: "clamp(0.85rem, 1.1vw, 1rem)",
+                      lineHeight: 1.3,
+                      overflowWrap: "anywhere",
+                      wordBreak: "break-word",
                     }}
                   />
                 ))}
               </div>
             )}
+
             {"enables" in point && point.enables && (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.45rem", marginTop: "0.65rem" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))", gap: "0.45rem", marginTop: "0.7rem" }}>
                 {point.enables.map((e) => (
                   <span
                     key={e}
                     className="ar"
                     style={{
                       textAlign: "center",
-                      padding: "0.5rem 0.3rem",
-                      background: "rgba(106,74,52,0.08)",
-                      fontSize: "clamp(0.85rem, 1.15vw, 1rem)",
-                      borderRadius: "0.7rem",
+                      padding: "0.5rem 0.35rem",
+                      background: "rgba(125,97,71,0.08)",
+                      fontSize: "clamp(0.8rem, 1vw, 0.92rem)",
+                      borderRadius: "0.85rem",
+                      lineHeight: 1.4,
                     }}
                   >
                     {e}
